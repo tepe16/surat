@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Pegawai;
+
+use App\Models\PegawaiCamat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use DB;
 
-
-class PegawaiController extends Controller
+class PegawaiCamatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawais=Pegawai::orderBy('id_pegawai','desc')->paginate(10);
-        return view('admin.Pegawai.lihat',compact('pegawais'));
+        $camat=PegawaiCamat::orderBy('id_pegawai_camat','desc')->paginate(10);
+        return view('admin.Camat.index',compact('camat'));
     }
 
     /**
@@ -28,7 +27,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('admin.Pegawai.tambah');
+        return view('admin.Camat.tambah');
     }
 
     /**
@@ -39,16 +38,15 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        
-          $pegawai = new Pegawai ([
-            'nama_pegawai' => $request->nama_pegawai,
+        $camat = new PegawaiCamat ([
+            'nama_pegawai_camat' => $request->nama_pegawai_camat,
             'nip'=>$request->nip,
             'level'=>$request->level,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             ]);
-            $pegawai->save();
-            return redirect()->route('pegawais.index')->with('success', 'Pegawai success save');
+            $camat->save();
+            return redirect()->route('camats.index')->with('success', 'Pegawai Camat success save');
     }
 
     /**
@@ -59,8 +57,7 @@ class PegawaiController extends Controller
      */
     public function show($id)
     {
-        
-
+        //
     }
 
     /**
@@ -71,8 +68,8 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = Pegawai::findOrFail($id);
-        return view('admin.Pegawai.edit', ['pegawai' => $pegawai]);   
+        $camat = PegawaiCamat::findOrFail($id);
+        return view('admin.Camat.edit', ['camat' => $camat]);   
     }
 
     /**
@@ -84,13 +81,13 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $userData = $request->only(["nama_pegawai","nip","username","password"]);
+        $userData = $request->only(["nama_pegawai_camat","nip","level","username","password"]);
         $userData['password'] = Hash::make($userData['password']);
-        Pegawai::find($id)->update($userData);
-        return redirect()->route('pegawais.index')
-                        ->with('success','pegawai has been update successfully.');
+        PegawaiCamat::find($id)->update($userData);
+        return redirect()->route('camats.index')
+                        ->with('success','pegawai camat has been update successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -100,9 +97,9 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $pegawai = Pegawai::find($id)->delete();
+        $camat = PegawaiCamat::find($id)->delete();
 
-        return redirect()->route('pegawais.index')
-                        ->with('success','Pegawai deleted successfully');
+        return redirect()->route('camats.index')
+                        ->with('success','Pegawai Camat deleted successfully');
     }
 }

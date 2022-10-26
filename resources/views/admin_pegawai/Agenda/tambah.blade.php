@@ -1,10 +1,10 @@
-@extends('admin.layout')
+@extends('admin_pegawai.layout')
 @section('content')
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">EDIT DATA PEGAWAI</h4></br>
+                <h4 class="card-title">TAMBAH DATA AGENDA</h4></br>
                 @if ($errors->any())
                      <div class="alert alert-danger">
                          <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -15,42 +15,45 @@
                          </ul>
                      </div>
                 @endif
-                <form action="{{ route('pegawais.update' , $pegawai->id_pegawai) }}" method="post">
-                @method('PUT')
+                <form action="{{ route('agenda.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-9">
-                                <labbel><b>Nama Pegawai</b></label></br></br>
+                                <labbel><b>Tanggal Agenda</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="nama_pegawai" value="{{$pegawai->nama_pegawai}}"  placeholder="Masukan Nama Pegawai">
+                                    <input type="date" class="form-control"  data-date-format="DD MMMM YYYY" value="2015-08-09" name="tgl_agenda" placeholder="Masukan Tanggal Agenda" required/>
+                                    <input type="hidden" class="form-control" name="id_pegawai" value="{{ Auth::guard('pgw')->user()->id_pegawai }}" >
+                                    <option></option>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <labbel><b>NIP</b></label></br></br>
+                                <labbel><b>Isi Acara</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="nip" value="{{$pegawai->nip}}" placeholder="Masukan NIP">
+                                    <textarea type="text" class="form-control" name="isi_acara" placeholder="Masukan Isi Acara" required/></textarea>
+                                    <option></option>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>Username</b></label></br></br>
+                                <labbel><b>Peserta</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="username" value="{{$pegawai->username}}" placeholder="Masukan Username">
+                                    <input type="text" class="form-control" name="peserta" placeholder="Masukan Peserta" required/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>New Password</b></label></br></br>
+                                <labbel><b>Tempat</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="password" placeholder="Masukan Password">
+                                    <input type="text" class="form-control" name="tempat" placeholder="Masukan Tempat" required/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>Konfirmasi Password</b></label></br></br>
+                                <labbel><b>Waktu</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="konfirm_password" placeholder="Masukan Konfirmasi Password">
+                                    <input type="text" class="form-control" id="time" name="waktu" placeholder="Masukan Waktu" required/>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="form-actions">
                         <div class="text-left">
                             <button type="submit" class="btn btn-info">Submit</button>
@@ -63,3 +66,19 @@
     </div>
 </div>
 @endsection
+<script>
+
+var timepicker = new TimePicker('time', {
+  lang: 'en',
+  theme: 'dark'
+});
+
+var input = document.getElementById('time');
+
+timepicker.on('change', function(evt) {
+  
+  var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+  evt.element.value = value;
+
+});
+</script>

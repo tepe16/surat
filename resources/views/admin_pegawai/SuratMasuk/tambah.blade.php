@@ -20,63 +20,49 @@
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-9">
-                                <labbel><b>NO Surat</b></label></br></br>
+                                <labbel><b>Kode  Surat</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="no_surat_masuk" placeholder="Masukan Nama No Surat" required/>
-                                    <input type="hidden" class="form-control" name="id_pegawai" value="{{ Auth::guard('pgw')->user()->id_pegawai }}" >
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <labbel><b>Jenis Surat</b></label></br></br>
-                                <div class="form-group">
-                                    <select type="text" class="form-control" name="id_jenis_surat" required/>
-                                    <option value="" selected="" disable="">--PILIH JENIS SURAT--</option>
-                                    @foreach($jenis as $a)
-                                    <option value="{{$a->id_jenis_surat}}">{{$a->nama_jenis}}</option>
+                                    <select type="text" class="form-control" name="id_kode_surat" required/>
+                                    <option value="" selected="" disable="">--PILIH KODE SURAT--</option>
+                                    @foreach($kode as $a)
+                                    <option value="{{$a->id_kode_surat}}">{{$a->id_kode_surat}}-{{$a->nama_kode_surat}}</option>
                                     @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <labbel><b>Instansi</b></label></br></br>
-                                <div class="form-group">
-                                    <select type="text" class="form-control" name="id_instansi" required/>
-                                    <option value="" selected="" disable="">--PILIH INSTANSI--</option>
-                                    @foreach($instansi as $b)
-                                    <option value="{{$b->id_instansi}}">{{$b->nama_instansi}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <labbel><b>Bagian</b></label></br></br>
-                                <div class="form-group">
-                                    <select type="text" class="form-control" name="id_bagian" required/>
-                                    <option value="" selected="" disable="">--PILIH BAGIAN--</option>
-                                    @foreach($bagian as $c)
-                                    <option value="{{$c->id_bagian}}">{{$c->nama_bagian}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <labbel><b>Perihal</b></label></br></br>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="perihal" placeholder="Masukan Perihal" required/>
-                                    <option></option>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <labbel><b>Tanggal Surat</b></label></br></br>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" name="tgl_surat" required/>
-                                    <option></option>
                                 </div>
                             </div>
                             <div class="col-md-9">
                                 <labbel><b>Tanggal Masuk</b></label></br></br>
                                 <div class="form-group">
                                     <input type="date" class="form-control" name="tgl_masuk" max="{{ date('Y-m-d')}}" required/>
+                                    <option></option>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <labbel><b>Perihal</b></label></br></br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="perihal" placeholder="Masukan Perihal" required/>
+                                    <input type="hidden" class="form-control" name="id_pegawai" value="{{ Auth::guard('pgw')->user()->id_pegawai }}" >
+                                    <option></option>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <labbel><b>Asal Surat</b></label></br></br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="asal_surat" placeholder="Masukan Asal Surat" required/>
+                                    <option></option>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <labbel><b>Lembar Surat</b></label></br></br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="lembar_surat" placeholder="Masukan Lembar Surat" required/>
+                                    <option></option>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <labbel><b>Lampiran Surat</b></label></br></br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="lampiran" placeholder="Masukan Lampiran Surat" required/>
                                     <option></option>
                                 </div>
                             </div>

@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Pegawai;
+use App\Models\PegawaiCamat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use DB;
 
-
-class PegawaiController extends Controller
+class SettingCamatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,7 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawais=Pegawai::orderBy('id_pegawai','desc')->paginate(10);
-        return view('admin.Pegawai.lihat',compact('pegawais'));
+        
     }
 
     /**
@@ -28,7 +26,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('admin.Pegawai.tambah');
+        //
     }
 
     /**
@@ -39,16 +37,7 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        
-          $pegawai = new Pegawai ([
-            'nama_pegawai' => $request->nama_pegawai,
-            'nip'=>$request->nip,
-            'level'=>$request->level,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            ]);
-            $pegawai->save();
-            return redirect()->route('pegawais.index')->with('success', 'Pegawai success save');
+        //
     }
 
     /**
@@ -59,8 +48,11 @@ class PegawaiController extends Controller
      */
     public function show($id)
     {
-        
-
+        $camat=DB::table('pegawai_camat')
+        ->select('pegawai_camat.id_pegawai_camat','pegawai_camat.nama_pegawai_camat','pegawai_camat.nip','pegawai_camat.username','pegawai_camat.level')
+        ->where('pegawai_camat.id_pegawai_camat',$id)
+        ->paginate(1);
+        return view('pengelola_camat.Setting.index',compact('camat'));
     }
 
     /**
@@ -71,8 +63,8 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = Pegawai::findOrFail($id);
-        return view('admin.Pegawai.edit', ['pegawai' => $pegawai]);   
+        $camat = PegawaiCamat::findOrFail($id);
+        return view('pengelola_camat.Setting.edit', ['camat' => $camat]); 
     }
 
     /**
@@ -84,12 +76,11 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $userData = $request->only(["nama_pegawai","nip","username","password"]);
+        $userData = $request->only(["nama_pegawai_camat","nip","level","username","password"]);
         $userData['password'] = Hash::make($userData['password']);
-        Pegawai::find($id)->update($userData);
-        return redirect()->route('pegawais.index')
-                        ->with('success','pegawai has been update successfully.');
+        PegawaiCamat::find($id)->update($userData);
+        return redirect()->route('settingcamat.show',$id)
+                        ->with('success','pegawai camat has been update successfully.');
     }
 
     /**
@@ -100,9 +91,6 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $pegawai = Pegawai::find($id)->delete();
-
-        return redirect()->route('pegawais.index')
-                        ->with('success','Pegawai deleted successfully');
+        //
     }
 }

@@ -146,20 +146,12 @@
                                             class="hide-menu"> <b>TAMBAH ADMIN</b> 
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('instansi.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH INSTANSI</b>
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('bagians.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH BAGIAN</b>
-                                        </span></a>
-                                </li>
                                 <li class="sidebar-item"><a href="{{ route('pegawais.create') }}" class="sidebar-link"><span
                                             class="hide-menu"> <b>TAMBAH PEGAWAI</b>
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('jenis.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH JENIS SURAT</b>
+                                <li class="sidebar-item"><a href="{{ route('camats.create') }}" class="sidebar-link"><span
+                                            class="hide-menu"> <b>TAMBAH PEGAWAI <br> CAMAT</b>
                                         </span></a>
                                 </li>
                             </ul>
@@ -173,20 +165,12 @@
                                             class="hide-menu"> <b>LIHAT ADMIN</b> 
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('instansi.index') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT INSTANSI</b>
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('bagians.index') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT BAGIAN</b>
-                                        </span></a>
-                                </li>
                                 <li class="sidebar-item"><a href="{{ route('pegawais.index') }}" class="sidebar-link"><span
                                             class="hide-menu"> <b>LIHAT PEGAWAI</b>
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('jenis.index') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT JENIS SURAT</b>
+                                <li class="sidebar-item"><a href="{{ route('camats.index') }}" class="sidebar-link"><span
+                                            class="hide-menu"> <b>LIHAT PEGAWAI<br> CAMAT</b>
                                         </span></a>
                                 </li>
                             </ul>

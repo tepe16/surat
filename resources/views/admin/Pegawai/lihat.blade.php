@@ -13,6 +13,7 @@
                                     <th>No</th>
                                     <th>Nama Pegawai</th>
                                     <th>NIP</th>
+                                    <th>Level</th>
                                     <th>Username</th>
                                     <th>Action</th>
                                 </tr>
@@ -23,6 +24,7 @@
                                     <td>{{ $index + 1}}</td>
                                     <td>{{$pegawai->nama_pegawai}}</td>
                                     <td>{{$pegawai->nip}}</td>
+                                    <td>{{$pegawai->level}}</td>
                                     <td>{{$pegawai->username}}</td>
                                     <td>
                                         <form action="{{ route('pegawais.destroy',$pegawai->id_pegawai) }}" method="POST">

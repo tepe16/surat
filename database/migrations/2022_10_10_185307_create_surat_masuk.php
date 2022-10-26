@@ -15,16 +15,15 @@ return new class extends Migration
     {
         Schema::create('surat_masuk', function (Blueprint $table) {
             $table->increments('id_surat_masuk');
-            $table->string('no_surat_masuk',25);
-            $table->integer('id_bagian');
-            $table->integer('id_jenis_surat');
+            $table->integer('id_kode_surat');
             $table->integer('id_pegawai');
-            $table->integer('id_instansi');
-            $table->date('tgl_surat');
-            $table->date('tgl_masuk');
-            $table->string('perihal',20);
+            $table->string('asal_surat',50);
+            $table->string('tgl_masuk',50);
+            $table->string('perihal',50);
+            $table->string('lembar_surat',50);
+            $table->string('lampiran',50);
             $table->text('file');
-
+            $table->timestamps();
         });
     }
 

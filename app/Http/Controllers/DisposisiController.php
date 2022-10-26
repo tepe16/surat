@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Disposisi;
-use App\Models\Jenis;
-use App\Models\Instansi;
-use App\Models\Bagian;
+use App\Models\PegawaiCamat;
 use App\Models\SuratMasuk;
 use DB ;
 use Illuminate\Http\Request;
@@ -19,13 +17,11 @@ class DisposisiController extends Controller
     public function index()
     {
         $disposisi=DB::table('disposisi')
-        ->select('disposisi.id_disposisi','disposisi.no_surat','disposisi.tgl_surat','disposisi.tgl_terima','disposisi.perihal','disposisi.sifat','disposisi.rahasia','disposisi.tujuan','jenis.nama_jenis','instansi.nama_instansi','bagian.nama_bagian','pegawai.nama_pegawai')
-        ->join('jenis', 'disposisi.id_jenis_surat', '=' , 'jenis.id_jenis_surat')
-        ->join('instansi', 'disposisi.id_instansi','=', 'instansi.id_instansi')
-        ->join('bagian', 'disposisi.id_bagian','=', 'bagian.id_bagian')
-        ->join('pegawai', 'disposisi.id_pegawai','=', 'pegawai.id_pegawai')
+        ->select('disposisi.id_disposisi','disposisi.tgl_penyelesaian','disposisi.tgl_kembali','disposisi.kembali_kepada','disposisi.intruksi','disposisi.sifat','disposisi.tujuan','pegawai_camat.nama_pegawai_camat','surat_masuk.id_kode_surat')
+        ->join('surat_masuk', 'disposisi.id_surat_masuk', '=' , 'surat_masuk.id_surat_masuk')
+        ->join('pegawai_camat', 'disposisi.id_pegawai_camat','=', 'pegawai_camat.id_pegawai_camat')
         ->orderBy('disposisi.id_disposisi','desc')->paginate(10);
-        return view('admin_pegawai.Disposisi.lihat',compact('disposisi'));
+        return view('pengelola_camat.Disposisi.index',compact('disposisi'));
     }
 
     /**
@@ -35,11 +31,8 @@ class DisposisiController extends Controller
      */
     public function create()
     {
-        $jenis=Jenis::orderBy('id_jenis_surat','desc')->paginate();
-        $instansi=Instansi::orderBy('id_instansi','desc')->paginate();
-        $bagian=Bagian::orderBy('id_bagian','desc')->paginate();
-        $surat_masuk=SuratMasuk::orderBy('id_surat_masuk','desc')->paginate();
-        return view('admin_pegawai.Disposisi.tambah',compact('jenis','instansi','bagian','surat_masuk'));
+        $suratmasuk=SuratMasuk::orderBy('id_surat_masuk','desc')->paginate();
+        return view('pengelola_camat.Disposisi.tambah',compact('suratmasuk'));
     }
 
     /**
@@ -51,29 +44,16 @@ class DisposisiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_surat' => 'required|unique:disposisi',
-            'id_jenis_surat' => 'required',
-            'id_instansi' => 'required',
-            'id_bagian' => 'required',
-            'id_pegawai' => 'required',
-            'perihal' => 'required',
+            'id_surat_masuk' => 'required|unique:disposisi',
+            'id_pegawai_camat' => 'required',
+            'tgl_penyelesaian' => 'required',
+            'tgl_kembali' => 'required',
+            'kembali_kepada' => 'required',
             'sifat' => 'required',
-            'rahasia' => 'required',
+            'intruksi' => 'required',
             'tujuan' => 'required',
-            'tgl_surat' => 'required',
-            'tgl_terima' => 'required',
-            
-            
         ]);
         $input = $request->all();
-
-        if ($file = $request->file('file')) {
-            $destinationPath = 'document/';
-            $NameFile = date('YmdHis') . "." . $file->getClientOriginalExtension();
-            $file->move($destinationPath, $NameFile);
-            $input['file'] = "$NameFile";
-        }
-
         Disposisi::create($input);
 
         return redirect()->route('disposisi.index')
@@ -88,7 +68,14 @@ class DisposisiController extends Controller
      */
     public function show($id)
     {
-        //
+        $disposisi=DB::table('disposisi')
+        ->select('disposisi.id_disposisi','disposisi.tgl_penyelesaian','disposisi.tgl_kembali','disposisi.kembali_kepada','disposisi.intruksi','disposisi.sifat','disposisi.tujuan','surat_masuk.id_kode_surat','surat_masuk.tgl_masuk','surat_masuk.asal_surat')
+        ->join('surat_masuk', 'disposisi.id_surat_masuk', '=' , 'surat_masuk.id_surat_masuk')
+        ->where('disposisi.id_disposisi', $id)
+        ->get();
+
+
+        return view('pengelola_camat.Disposisi.print')->with('disposisi', $disposisi);
     }
 
     /**
@@ -99,22 +86,16 @@ class DisposisiController extends Controller
      */
     public function edit($id)
     {
-        $jenis=Jenis::orderBy('id_jenis_surat','desc')->paginate();
-        $instansi=Instansi::orderBy('id_instansi','desc')->paginate();
-        $bagian=Bagian::orderBy('id_bagian','desc')->paginate();
-        $surat_masuk=SuratMasuk::orderBy('id_surat_masuk','desc')->paginate();
+      
+        $surat_masuk=SuratMasuk::orderBy('id_surat_masuk','desc')->paginate(10);
         $disposisi=DB::table('disposisi')
-        ->select('disposisi.id_disposisi','disposisi.no_surat','disposisi.id_jenis_surat','disposisi.id_instansi','disposisi.id_bagian','disposisi.tgl_surat','disposisi.tgl_terima','disposisi.perihal','disposisi.sifat','disposisi.rahasia','disposisi.tujuan','jenis.nama_jenis','instansi.nama_instansi','bagian.nama_bagian')
-        ->join('jenis', 'disposisi.id_jenis_surat', '=' , 'jenis.id_jenis_surat')
-        ->join('instansi', 'disposisi.id_instansi','=', 'instansi.id_instansi')
-        ->join('bagian', 'disposisi.id_bagian','=', 'bagian.id_bagian')
+        ->select('disposisi.id_disposisi','surat_masuk.id_surat_masuk','disposisi.tgl_penyelesaian','disposisi.tgl_kembali','disposisi.kembali_kepada','disposisi.intruksi','disposisi.sifat','disposisi.tujuan','pegawai_camat.nama_pegawai_camat','surat_masuk.id_kode_surat')
+        ->join('surat_masuk', 'disposisi.id_surat_masuk', '=' , 'surat_masuk.id_surat_masuk')
+        ->join('pegawai_camat', 'disposisi.id_pegawai_camat','=', 'pegawai_camat.id_pegawai_camat')
         ->where('disposisi.id_disposisi',$id)
         ->first();
-        return view('admin_pegawai.Disposisi.edit')
+        return view('pengelola_camat.Disposisi.edit')
         ->with(compact('disposisi'))
-        ->with(compact('jenis'))
-        ->with(compact('instansi'))
-        ->with(compact('bagian'))
         ->with(compact('surat_masuk'));
     }
 
@@ -128,18 +109,16 @@ class DisposisiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'no_surat' => 'required',
-            'id_jenis_surat' => 'required',
-            'id_instansi' => 'required',
-            'id_bagian' => 'required',
-            'perihal' => 'required',
+            'id_surat_masuk' => 'required',
+            'id_pegawai_camat' => 'required',
+            'tgl_penyelesaian' => 'required',
+            'tgl_kembali' => 'required',
+            'kembali_kepada' => 'required',
             'sifat' => 'required',
-            'rahasia' => 'required',
+            'intruksi' => 'required',
             'tujuan' => 'required',
-            'tgl_surat' => 'required',
-            'tgl_terima' => 'required',
         ]);
-        $disposisi = $request->only(["no_surat","id_jenis_surat","id_instansi","id_bagian","perihal","sifat","rahasia","tujuan","tgl_surat","tgl_terima"]);
+        $disposisi = $request->only(["id_surat_masuk","tgl_penyelesaian","tgl_kembali","kembali_kepada","intruksi","sifat","tujuan"]);
         Disposisi::find($id)->update($disposisi);
         return redirect()->route('disposisi.index')
                          ->with('success','Disposisi Has Been update successfully');

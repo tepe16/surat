@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('surat_keluar', function (Blueprint $table) {
-            $table->increments('id_surat_keluar');
-            $table->string('no_surat_keluar',25);
-            $table->integer('id_jenis_surat');
+        Schema::create('agenda', function (Blueprint $table) {
+            $table->increments('id_agenda');
             $table->integer('id_pegawai');
-            $table->integer('id_instansi');
-            $table->date('tgl_surat');
-            $table->string('perihal',20);
-            $table->text('file');
-
+            $table->string('tgl_agenda',50);
+            $table->text('isi_acara');
+            $table->string('peserta',50);
+            $table->string('tempat',50);
+            $table->string('waktu',50);
+            $table->timestamps();
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('surat_keluar');
+        Schema::dropIfExists('agenda');
     }
 };

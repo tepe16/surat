@@ -11,5 +11,5 @@ class Disposisi extends Model
     public $table="disposisi";
     public $timestamps = false ;
     protected $primaryKey='id_disposisi';
-    protected $fillable =['no_surat','id_jenis_surat','id_instansi','id_bagian','id_pegawai','tgl_surat','tgl_terima','perihal','sifat','tujuan','rahasia'];
+    protected $fillable =['id_surat_masuk','id_pegawai_camat','tgl_penyelesaian','tgl_kembali','kembali_kepada','intruksi','sifat','tujuan'];
 }

@@ -12,5 +12,5 @@ class Pegawai extends Authenticatable
     protected $table="pegawai";
     protected $primaryKey="id_pegawai";
 
-    protected $fillable=['nama_pegawai','nip','username','password'];
+    protected $fillable=['nama_pegawai','nip','level','username','password'];
 }

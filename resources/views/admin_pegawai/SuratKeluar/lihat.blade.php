@@ -12,25 +12,56 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pegawai</th>
-                                    <th>No Surat</th>
-                                    <th>Jenis  Surat</th>
-                                    <th>Nama Instansi</th>
-                                    <th>Tanggal Terima</th>
-                                    <th>Perihal</th>
+                                    <th>No Kode Surat</th>
+                                    <th>Nama  Surat</th>
+                                    <th>Tanggal Keluar</th>
+                                    <th>Periha</th>
+                                    <th>Tujuan Surat</th>
+                                    <th>Lembar Surat</th>
+                                    <th>Lampiran Surat</th>
+                                    <th>Isi Ringkas Surat</th>
                                     <th>Document</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($surat_keluar as $index => $surat)
+                                @if (substr($surat->tgl_keluar,5,2) == '01')
+                                <?php $hasil_bulan='Januari' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '02')
+                                <?php $hasil_bulan='Februari' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '03')
+                                <?php $hasil_bulan='Maret' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '04')
+                                <?php $hasil_bulan='April' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '05')
+                                <?php $hasil_bulan='Mei' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '06')
+                                <?php $hasil_bulan='Juni' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '07')
+                                <?php $hasil_bulan='Juli' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '08')
+                                <?php $hasil_bulan='Agustus' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '09')
+                                <?php $hasil_bulan='September' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '10')
+                                <?php $hasil_bulan='Oktober' ?>
+                                @elseif (substr($surat->tgl_keluar,5,2) == '11')
+                                <?php $hasil_bulan='November' ?>
+                                @else
+                                <?php $hasil_bulan='Desember' ?>
+                                @endif
                                 <tr>
                                     <td>{{ $index + 1}}</td>
                                     <td>{{$surat->nama_pegawai}}</td>
-                                    <td>{{$surat->no_surat_keluar}}</td>
-                                    <td>{{$surat->nama_jenis}}</td>
-                                    <td>{{$surat->nama_instansi}}</td>
-                                    <td>{{$surat->tgl_surat}}</td>
+                                    <td>{{$surat->id_kode_surat}}</td>
+                                    <td>{{$surat->nama_kode_surat}}</td>
+                                    <td>{{substr($surat->tgl_keluar,0,2)}} {{$hasil_bulan}} {{substr($surat->tgl_keluar,0,4)}}</td>
                                     <td>{{$surat->perihal}}</td>
+                                    <td>{{$surat->tujuan_surat}}</td>
+                                    <td>{{$surat->lembar_surat}}</td>
+                                    <td>{{$surat->lampiran}}</td>
+                                    <td>{{$surat->isi_ringkas}}</td>
                                     <td>{{$surat->file}}</td>
                                     <td>
                                         <form action="{{ route('suratkeluar.destroy',$surat->id_surat_keluar) }}" method="POST">

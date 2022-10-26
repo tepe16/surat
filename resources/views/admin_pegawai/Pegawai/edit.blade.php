@@ -15,7 +15,7 @@
                          </ul>
                      </div>
                 @endif
-                <form action="{{ route('pegawais.update' , $pegawai->id_pegawai) }}" method="post">
+                <form action="{{ route('settingpegawai.update' , $pegawai->id_pegawai) }}" method="post">
                 @method('PUT')
                 @csrf
                     <div class="form-body">

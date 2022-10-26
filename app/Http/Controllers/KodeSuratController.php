@@ -1,14 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Pegawai;
+use App\Models\KodeSurat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use DB;
 
-
-class PegawaiController extends Controller
+class KodeSuratController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +13,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawais=Pegawai::orderBy('id_pegawai','desc')->paginate(10);
-        return view('admin.Pegawai.lihat',compact('pegawais'));
+        $kodes = KodeSurat::orderBy('id_kode_surat','desc')->paginate(10);
+        return view('admin_pegawai.KodeSurat.index',compact('kodes'));
     }
 
     /**
@@ -28,7 +24,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('admin.Pegawai.tambah');
+        return view('admin_pegawai.KodeSurat.tambah');
     }
 
     /**
@@ -39,16 +35,14 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        
-          $pegawai = new Pegawai ([
-            'nama_pegawai' => $request->nama_pegawai,
-            'nip'=>$request->nip,
-            'level'=>$request->level,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            ]);
-            $pegawai->save();
-            return redirect()->route('pegawais.index')->with('success', 'Pegawai success save');
+        $request->validate([
+            'id_kode_surat' => 'required|unique:kode_surat',
+            'nama_kode_surat'=> 'required'
+        ]);
+        $input =$request->all();
+        KodeSurat::create($input);
+        return redirect()->route('kode.index')
+                         ->with('success', 'Kode Surat has been created successfully.');
     }
 
     /**
@@ -59,8 +53,7 @@ class PegawaiController extends Controller
      */
     public function show($id)
     {
-        
-
+        //
     }
 
     /**
@@ -71,8 +64,8 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = Pegawai::findOrFail($id);
-        return view('admin.Pegawai.edit', ['pegawai' => $pegawai]);   
+        $kodes= KodeSurat::findOrFail($id);
+        return view('admin_pegawai.KodeSurat.edit', ['kodes' =>$kodes]);
     }
 
     /**
@@ -84,12 +77,13 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $userData = $request->only(["nama_pegawai","nip","username","password"]);
-        $userData['password'] = Hash::make($userData['password']);
-        Pegawai::find($id)->update($userData);
-        return redirect()->route('pegawais.index')
-                        ->with('success','pegawai has been update successfully.');
+        $request->validate([
+            'nama_kode_surat' => 'required',
+          ]);   
+          $kodes = $request->only(["nama_kode_surat"]);
+          KodeSurat::find($id)->update($kodes);
+          return redirect()->route('kode.index')
+                           ->with('success','Kode Surat Has Been update successfully');
     }
 
     /**
@@ -100,9 +94,8 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $pegawai = Pegawai::find($id)->delete();
-
-        return redirect()->route('pegawais.index')
-                        ->with('success','Pegawai deleted successfully');
+        $kodes= KodeSurat::find($id)->delete();
+        return redirect()->route('kode.index')
+                         ->with('success','Kode Surat Delete successfully');
     }
 }

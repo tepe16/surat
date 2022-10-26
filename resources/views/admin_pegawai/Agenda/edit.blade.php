@@ -1,10 +1,10 @@
-@extends('admin.layout')
+@extends('admin_pegawai.layout')
 @section('content')
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">EDIT DATA PEGAWAI</h4></br>
+                <h4 class="card-title">TAMBAH DATA AGENDA</h4></br>
                 @if ($errors->any())
                      <div class="alert alert-danger">
                          <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -15,42 +15,46 @@
                          </ul>
                      </div>
                 @endif
-                <form action="{{ route('pegawais.update' , $pegawai->id_pegawai) }}" method="post">
+                <form action="{{ route('agenda.update', $agendas->id_agenda) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-9">
-                                <labbel><b>Nama Pegawai</b></label></br></br>
+                                <labbel><b>Tanggal Agenda</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="nama_pegawai" value="{{$pegawai->nama_pegawai}}"  placeholder="Masukan Nama Pegawai">
+                                    <input type="date" class="form-control" name="tgl_agenda" value="{{$agendas->tgl_agenda}}" required/>
+                                    <input type="hidden" class="form-control" name="id_pegawai" value="{{ Auth::guard('pgw')->user()->id_pegawai }}" >
+                                    <option></option>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <labbel><b>NIP</b></label></br></br>
+                                <labbel><b>Isi Acara</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="nip" value="{{$pegawai->nip}}" placeholder="Masukan NIP">
+                                    <textarea type="text" class="form-control" name="isi_acara"  required/>{{$agendas->isi_acara}}</textarea>
+                                    <option></option>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>Username</b></label></br></br>
+                                <labbel><b>Peserta</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="username" value="{{$pegawai->username}}" placeholder="Masukan Username">
+                                    <input type="text" class="form-control" name="peserta" value="{{$agendas->peserta}}" required/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>New Password</b></label></br></br>
+                                <labbel><b>Tempat</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="password" placeholder="Masukan Password">
+                                    <input type="text" class="form-control" name="tempat" value="{{$agendas->tempat}}" required/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                            <labbel><b>Konfirmasi Password</b></label></br></br>
+                                <labbel><b>Waktu</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="konfirm_password" placeholder="Masukan Konfirmasi Password">
+                                    <input type="time" class="form-control" name="waktu" min="00:00" max="23:59" value="{{$agendas->waktu}}" required/>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="form-actions">
                         <div class="text-left">
                             <button type="submit" class="btn btn-info">Submit</button>

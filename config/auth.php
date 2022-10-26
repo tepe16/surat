@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'pegawai',
         ],
+        'camat' => [
+            'driver' => 'session',
+            'provider' => 'pegawai_camat',
+        ]
     ],
 
     /*
@@ -76,6 +80,10 @@ return [
         'pegawai' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pegawai::class,
+        ],
+        'pegawai_camat' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\PegawaiCamat::class,
         ]
     ],
 

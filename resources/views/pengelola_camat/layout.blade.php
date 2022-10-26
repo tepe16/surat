@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
-    <title>ADMIN PEGAWAI SURAT</title>
+    <title>ADMIN CAMAT SURAT</title>
     <!-- Custom CSS -->
     <link href="/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
     <link href="/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -19,7 +19,6 @@
     <link href="/dist/css/style.min.css" rel="stylesheet">
     <!-- This page plugin CSS -->
     <link href="/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
     <!-- Custom CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,33 +27,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<style>
- input {
-    position: relative;
-    width: 150px; height: 20px;
-    color: white;
-}
 
-input:before {
-    position: absolute;
-    top: 3px; left: 3px;
-    content: attr(data-date);
-    display: inline-block;
-    color: black;
-}
-
-input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
-    display: none;
-}
-
-input::-webkit-calendar-picker-indicator {
-    position: absolute;
-    top: 3px;
-    right: 0;
-    color: black;
-    opacity: 1;
-}
-</style>
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -138,7 +111,7 @@ input::-webkit-calendar-picker-indicator {
                                 <img src="/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
-                                        class="text-dark"></span>{{ Auth::guard('pgw')->user()->nama_pegawai }}</span>
+                                        class="text-dark"></span>{{ Auth::guard('camat')->user()->nama_pegawai_camat }}</span>
                             </a>
                         </li>
                         <!-- ============================================================== -->
@@ -169,20 +142,8 @@ input::-webkit-calendar-picker-indicator {
                                 aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
                                     class="hide-menu">TAMBAH DATA </span></a>
                             <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                                <li class="sidebar-item"><a href="{{ route('kode.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH KODE </br>SURAT</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('agenda.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH AGENDA </br>SURAT</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('suratkeluar.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH SURAT </br>KELUAR</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('suratmasuk.create') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>TAMBAH SURAT </br> MASUK</b>
+                                <li class="sidebar-item"><a href="{{route('disposisi.create')}}" class="sidebar-link"><span
+                                            class="hide-menu"> <b>TAMBAH DISPOSISI </br>SURAT</b> 
                                         </span></a>
                                 </li>
                             </ul>
@@ -192,30 +153,18 @@ input::-webkit-calendar-picker-indicator {
                                 aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
                                     class="hide-menu">LIHAT DATA </span></a>
                             <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                                <li class="sidebar-item"><a href="{{route('kode.index')}}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT KODE </br> SURAT</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{route('agenda.index')}}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT AGENDA </br> SURAT</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('suratkeluar.index') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT SURAT </br> KELUAR</b> 
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('suratmasuk.index') }}" class="sidebar-link"><span
-                                            class="hide-menu"> <b>LIHAT SURAT </br> MASUK</b>
+                                <li class="sidebar-item"><a href="{{route('disposisi.index')}}" class="sidebar-link"><span
+                                            class="hide-menu"> <b>LIHAT DISPOSISI </br> SURAT</b> 
                                         </span></a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-small-cap"><span class="hide-menu">MENU KELOLA DATA PRIVASI</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('loginpegawai.show',Auth::guard('pgw')->user()->id_pegawai )}}"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('logincamat.show',Auth::guard('camat')->user()->id_pegawai_camat )}}"
                                     aria-expanded="false"><i data-feather="settings" class="feather-icon"></i><span
                                     class="hide-menu">LIHAT DATA PRIVASI</span></a></li>
                         <li class="nav-small-cap"><span class="hide-menu">MENU LOGOUT</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('logoutpegawai') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('logoutpengelola') }}"
                                     aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
                                     class="hide-menu">LOGOUT</span></a></li>
                     </ul>
@@ -279,31 +228,6 @@ input::-webkit-calendar-picker-indicator {
 
     <script src="/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/dist/js/pages/datatable/datatable-basic.init.js"></script>
-    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    
-    <script>
-    $("input").on("change", function() {
-    this.setAttribute(
-        "data-date",
-        moment(this.value, "YYYY-MM-DD")
-        .format( this.getAttribute("data-date-format") )
-    )
-    var timepicker = new TimePicker('time', {
-      lang: 'en',
-      theme: 'dark'
-    });
-});
-    
-    var input = document.getElementById('time');
-    
-    timepicker.on('change', function(evt) {
-      
-      var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-      evt.element.value = value;
-    
-    });
-    </script>
 </body>
 
 </html>

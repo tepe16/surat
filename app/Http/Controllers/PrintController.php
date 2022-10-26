@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\LoginPegawai;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use DB;
-class LoginPegawaiController extends Controller
+
+class PrintController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class LoginPegawaiController extends Controller
      */
     public function index()
     {
-        return view ('admin_pegawai.home');
+        //
     }
 
     /**
@@ -36,19 +34,7 @@ class LoginPegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-        if (Auth::guard('pgw')->attempt(['username' => $request->username, 'password' => $request->password])) {
-            $request->session()->regenerate();
-            return redirect()->route('loginpegawai.index')
-            ->with('success', 'Pegawai has been login successfully.');
-        }
-
-        return back()->withErrors([
-            'password' => 'Wrong username or password',
-        ]);
+        //
     }
 
     /**
@@ -59,12 +45,7 @@ class LoginPegawaiController extends Controller
      */
     public function show($id)
     {
-        $pegawai=DB::table('pegawai')
-        ->where('id_pegawai', $id)
-        ->get();
-
-
-        return view('admin_pegawai.Pegawai.lihat')->with('pegawai', $pegawai);
+        //
     }
 
     /**
@@ -100,12 +81,4 @@ class LoginPegawaiController extends Controller
     {
         //
     }
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('admin_pegawai');
-    }
 }
-

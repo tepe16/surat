@@ -1,10 +1,10 @@
-@extends('admin.layout')
+@extends('admin_pegawai.layout')
 @section('content')
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">EDIT DATA INSTANSI</h4></br>
+                <h4 class="card-title">EDIT DATA KODE SURAT</h4></br>
                 @if ($errors->any())
                      <div class="alert alert-danger">
                          <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -15,18 +15,25 @@
                          </ul>
                      </div>
                 @endif
-                <form action="{{ route('instansi.update' , $instansi->id_instansi) }}" method="post">
+                <form action="{{ route('kode.update' , $kodes->id_kode_surat) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-9">
-                                <labbel><b>Nama Instansi</b></label></br></br>
+                                <labbel><b>Kode Surat</b></label></br></br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="nama_instansi" value="{{$instansi->nama_instansi}}" required/>
+                                    <input type="text" class="form-control" name="id_kode_surat" value="{{$kodes->id_kode_surat}}" readonly/>
+                                    <input type="hidden" class="form-control" name="id_pegawai" value="{{ Auth::guard('pgw')->user()->id_pegawai }}" >
                                 </div>
                             </div>
                             <div class="col-md-9">
+                                <labbel><b>Nama Surat</b></label></br></br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="nama_kode_surat" value="{{$kodes->nama_kode_surat}}" required/>
+                                    <option></option>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-actions">

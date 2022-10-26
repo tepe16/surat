@@ -18,15 +18,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $index => $pegawai)
+                                @foreach($pegawai as $index => $pgw)
                                 <tr>
                                     <td>{{ $index + 1}}</td>
-                                    <td>{{$pegawai->nama_pegawai}}</td>
-                                    <td>{{$pegawai->nip}}</td>
-                                    <td>{{$pegawai->username}}</td>
+                                    <td>{{$pgw->nama_pegawai}}</td>
+                                    <td>{{$pgw->nip}}</td>
+                                    <td>{{$pgw->username}}</td>
                                     <td>
                                         <form action="#" method="POST">
-                                            <a class="btn btn-primary" href="{{ route('pegawais.edit',$pegawai->id_pegawai) }}">Edit</a>
+                                            <a class="btn btn-primary" href="{{ route('settingpegawai.edit',$pgw->id_pegawai) }}">Edit</a>
                                         </form>
                                  </td>
                                 </tr>

@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jenis', function (Blueprint $table) {
-            $table->increments('id_jenis_surat');
-            $table->string('nama_jenis');
+        Schema::table('pegawai', function (Blueprint $table) {
+            $table->string('level',50)->after('password');
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis');
+        Schema::table('pegawai', function (Blueprint $table) {
+         $table->dropColumn('level');
+        });
     }
 };

@@ -5,10 +5,9 @@ use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use DB ;
 
-
-class PegawaiController extends Controller
+class SettingPegawaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawais=Pegawai::orderBy('id_pegawai','desc')->paginate(10);
-        return view('admin.Pegawai.lihat',compact('pegawais'));
+
+
     }
 
     /**
@@ -28,7 +27,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('admin.Pegawai.tambah');
+        //
     }
 
     /**
@@ -39,16 +38,7 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        
-          $pegawai = new Pegawai ([
-            'nama_pegawai' => $request->nama_pegawai,
-            'nip'=>$request->nip,
-            'level'=>$request->level,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            ]);
-            $pegawai->save();
-            return redirect()->route('pegawais.index')->with('success', 'Pegawai success save');
+        //
     }
 
     /**
@@ -60,7 +50,11 @@ class PegawaiController extends Controller
     public function show($id)
     {
         
-
+        $pegawai=DB::table('pegawai')
+        ->select('pegawai.id_pegawai','pegawai.nama_pegawai','pegawai.nip','pegawai.username')
+        ->where('pegawai.id_pegawai',$id)
+        ->paginate(1);
+        return view('admin_pegawai.Pegawai.lihat',compact('pegawai'));
     }
 
     /**
@@ -72,7 +66,7 @@ class PegawaiController extends Controller
     public function edit($id)
     {
         $pegawai = Pegawai::findOrFail($id);
-        return view('admin.Pegawai.edit', ['pegawai' => $pegawai]);   
+        return view('admin_pegawai.Pegawai.edit', ['pegawai' => $pegawai]);   
     }
 
     /**
@@ -88,7 +82,7 @@ class PegawaiController extends Controller
         $userData = $request->only(["nama_pegawai","nip","username","password"]);
         $userData['password'] = Hash::make($userData['password']);
         Pegawai::find($id)->update($userData);
-        return redirect()->route('pegawais.index')
+        return redirect()->route('settingpegawai.show',$id)
                         ->with('success','pegawai has been update successfully.');
     }
 
@@ -100,9 +94,6 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $pegawai = Pegawai::find($id)->delete();
-
-        return redirect()->route('pegawais.index')
-                        ->with('success','Pegawai deleted successfully');
+        //
     }
 }

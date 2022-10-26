@@ -29,9 +29,9 @@
                                 <labbel><b>NIP</b></label></br></br>
                                 <div class="form-group">
                                     <input type="number" class="form-control" name="nip" placeholder="Masukan NIP" required/>
+                                    <input type="text" class="form-control" name="level" value="Pengelola Surat" required/>
                                 </div>
                             </div>
-                    
                             <div class="col-md-9">
                             <labbel><b>Username</b></label></br></br>
                                 <div class="form-group">
